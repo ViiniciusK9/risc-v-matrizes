@@ -17,6 +17,8 @@ e:	.word 5
 
 matriz: .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
+especamento: .string " "
+quebra: .string "\n"
 M:	.string "\nmenu: \n1) le_matriz \n2) imprime_matriz \n3) calcula_determinante \n4) ordena_matriz \n5) maior_elemento\n0) encerrar programa\nop: "
 	
 
@@ -40,7 +42,7 @@ main:
 
 	lw s9, e
 
-	addi s10, s10, 0
+	addi s10, s10, 6
 	
 
 	
@@ -141,28 +143,42 @@ func_a:
 
 	
 # IMPRIME
+
+# NÃO ME PERGUNTE OQ EU FIZ AQUI SO SEI QUE DEU CERTO, OU SEJA, CODIGO PERFEITO!
 func_b:
 	addi a4, a4, 0
-	addi a3, a3, 0
+	addi t6, t6, 7
+	
 	la s4, matriz
-	mul a5, s10, s10
+	# mul a5, s10, s10
 
 primeiro_for_print:
-	beq a4, a5, final_funcao_b
+	beq a4, s10, final_funcao_b
+	addi a4, a4, 1
+	li a7, 4
+	la a0, quebra
+	ecall
 	
+	mul a3, a3, zero
+	addi a3, a3, 0
+segundo_for_print:
 	beq a3, s10, primeiro_for_print
 	
 	li a7, 1
 	lw a0, 0(s4)
 	ecall
 	
+	li a7, 4
+	la a0, especamento
+	ecall
 	
-	addi a4, a4, 1
 	addi a3, a3, 1
 	addi s4, s4, 4
 	
+	blt a3, t6, segundo_for_print
+	
 final_funcao_b:
-	ecall
+	
 	ret
 
 
